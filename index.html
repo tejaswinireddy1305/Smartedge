@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartEdge Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- =========================================================
+     TOP HEADER NAV
+========================================================= -->
+<header class="top-header">
+    <div class="header-left">
+        <div class="logo-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"><path d="M18 10h-1.26A8 8 0 1 0 9 20h9a5 5 0 0 0 0-10z"/></svg>
+        </div>
+        <div class="logo-text">
+            <h1>SmartEdge</h1>
+            <span>Predictive Edge Caching for a Smarter CDN</span>
+        </div>
+    </div>
+
+    <nav class="header-nav">
+        <a href="#dashboard" class="nav-link active" data-section="dashboard">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+            Dashboard
+        </a>
+        <a href="#cache-section" class="nav-link" data-section="cache">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+            Cache
+        </a>
+        <a href="#analytics" class="nav-link" data-section="analytics">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Analytics
+        </a>
+        <a href="#ask-ai" class="nav-link" data-section="ask-ai">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+            Ask AI
+        </a>
+        <a href="#about" class="nav-link" data-section="about">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+            About
+        </a>
+    </nav>
+
+    <div class="header-status" id="apiStatus">
+        <span class="status-dot"></span>
+        Backend Online
+    </div>
+</header>
+
+
+<!-- =========================================================
+     MAIN CONTENT
+========================================================= -->
+<main class="main-content">
+
+    <!-- DASHBOARD VIEW -->
+    <div id="view-dashboard" class="page-view active">
+
+        <!-- KPI CARDS -->
+        <section id="dashboard" class="kpi-grid">
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">Total Requests</span>
+                    <div class="kpi-icon blue">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                    </div>
+                </div>
+                <h2 id="totalRequests">--</h2>
+                <p class="kpi-trend positive" id="requestsTrend">Live API requests</p>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">Cache Hits</span>
+                    <div class="kpi-icon green">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                    </div>
+                </div>
+                <h2 id="cacheHits">--</h2>
+                <p class="kpi-trend positive" id="hitRateTrend">-- hit rate</p>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">Cache Misses</span>
+                    <div class="kpi-icon red">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </div>
+                </div>
+                <h2 id="cacheMisses">--</h2>
+                <p class="kpi-trend negative" id="missRateTrend">-- miss rate</p>
+            </div>
+
+            <div class="kpi-card">
+                <div class="kpi-top">
+                    <span class="kpi-label">Current Cache Size</span>
+                    <div class="kpi-icon purple">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    </div>
+                </div>
+                <h2 id="cacheSize">--</h2>
+                <p class="kpi-sub" id="cacheCapacity">Capacity: 100 items</p>
+            </div>
+        </section>
+
+
+        <!-- ML PREDICTION ROW -->
+        <section class="two-col-grid">
+            <div class="panel-card">
+                <div class="panel-header">
+                    <div class="panel-icon purple">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-2.54"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-2.54"/></svg>
+                    </div>
+                    <div>
+                        <h3>ML Prediction Engine</h3>
+                        <p>Random Forest prediction for cache admission</p>
+                    </div>
+                </div>
+                <div class="ml-form">
+                    <label for="hour">Hour (0-23)</label>
+                    <input id="hour" type="number" min="0" max="23" value="12">
+
+                    <label for="dayOfWeek">Day of Week (0-6)</label>
+                    <input id="dayOfWeek" type="number" min="0" max="6" value="2">
+
+                    <label for="pastFrequency">Past Frequency</label>
+                    <input id="pastFrequency" type="number" min="0" value="20">
+
+                    <label for="recency">Recency (seconds)</label>
+                    <input id="recency" type="number" min="0" value="10">
+
+                    <label for="contentSize">Content Size (bytes)</label>
+                    <input id="contentSize" type="number" min="1" value="1839">
+
+                    <button id="runPredictionBtn" class="btn-primary full-width" onclick="runPrediction()">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                        Run ML Prediction
+                    </button>
+                </div>
+            </div>
+
+            <div class="panel-card">
+                <div class="panel-header">
+                    <div class="panel-icon blue">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></svg>
+                    </div>
+                    <div>
+                        <h3>Prediction Result</h3>
+                    </div>
+                </div>
+                <div class="prediction-result-layout">
+                    <div class="prediction-gauge">
+                        <div class="gauge-circle">
+                            <span id="predictionPercentage">--</span>
+                            <small>Probability</small>
+                        </div>
+                    </div>
+                    <div class="prediction-details">
+                        <div id="predictionDecisionBox" class="decision-box cache">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+                            <div>
+                                <strong id="predictionLabel">Waiting...</strong>
+                                <p id="cacheDecision">Enter features and run prediction.</p>
+                            </div>
+                        </div>
+                        <div class="model-details">
+                            <h4>Model Details</h4>
+                            <p><strong>Model:</strong> Random Forest Classifier</p>
+                            <p><strong>Features:</strong> hour, day_of_week, past_frequency, recency_seconds, content_size</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- CACHE STATS + CONTENTS ROW -->
+        <section class="two-col-grid">
+            <div class="panel-card">
+                <div class="panel-header">
+                    <div class="panel-icon blue">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                    </div>
+                    <div>
+                        <h3>Cache Statistics</h3>
+                        <p>Real-time cache performance metrics</p>
+                    </div>
+                </div>
+                <div class="chart-container">
+                    <canvas id="hitRateChart"></canvas>
+                </div>
+            </div>
+
+            <div class="panel-card" id="cache-section">
+                <div class="panel-header with-action">
+                    <div class="panel-header-left">
+                        <div class="panel-icon blue">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                        </div>
+                        <div>
+                            <h3>Cache Contents</h3>
+                            <p>Currently stored content in edge cache</p>
+                        </div>
+                    </div>
+                    <button id="resetCacheBtn" class="btn-danger-outline" onclick="resetCache()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                        Reset Cache
+                    </button>
+                </div>
+                <div class="table-wrapper">
+                    <table class="cache-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Content ID / URL</th>
+                                <th>Size (KB)</th>
+                                <th>Cached At</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="cacheTableBody">
+                            <tr><td colspan="5" class="empty-row">Loading cache contents...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- ASK AI SECTION -->
+        <section id="ask-ai" class="panel-card ai-section">
+            <div class="panel-header">
+                <div class="panel-icon purple">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="10" rx="2"/><circle cx="12" cy="5" r="2"/><path d="M12 7v4"/><line x1="8" y1="16" x2="8" y2="16"/><line x1="16" y1="16" x2="16" y2="16"/></svg>
+                </div>
+                <div>
+                    <h3>Ask SmartEdge AI</h3>
+                    <p>Ask questions about caching, performance, benchmarks, predictions and optimization</p>
+                </div>
+            </div>
+
+            <div class="ai-grid">
+                <div class="ai-column">
+                    <h4>Your Question</h4>
+                    <textarea id="aiQuestion" placeholder="Ask a question..." rows="5"></textarea>
+                    <button id="askAiBtn" class="btn-primary">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        Ask SmartEdge
+                    </button>
+                    <div id="aiLoading" class="ai-loading" style="display:none;">SmartEdge AI is analyzing...</div>
+                    <div id="aiError" class="ai-error" style="display:none;"></div>
+                </div>
+
+                <div class="ai-column">
+                    <h4>
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        AI Response
+                    </h4>
+                    <div id="aiResponseBox" class="ai-response-box">
+                        <p id="aiAnswer">Ask a question to get AI-powered insights about your SmartEdge cache performance.</p>
+                        <span class="ai-agent-tag" id="aiAgentTag" style="display:none;">Agent: <span id="aiAgent">Performance Agent</span></span>
+                    </div>
+                </div>
+
+                <div class="ai-column">
+                    <h4>Relevant Evidence</h4>
+                    <div id="aiEvidence" class="evidence-list">
+                        <p class="muted">Evidence will appear after asking a question.</p>
+                    </div>
+
+                    <h4 class="mt-16">Live System Context</h4>
+                    <div id="aiLiveContext" class="live-context">
+                        <div class="context-item"><span>Hit Rate:</span> <strong id="ctxHitRate">--</strong></div>
+                        <div class="context-item"><span>Total Requests:</span> <strong id="ctxTotalRequests">--</strong></div>
+                        <div class="context-item"><span>Cache Size:</span> <strong id="ctxCacheSize">--</strong></div>
+                        <div class="context-item"><span>Model:</span> <strong>Random Forest</strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- ANALYTICS VIEW -->
+    <div id="view-analytics" class="page-view">
+        <section class="panel-card">
+            <div class="panel-header">
+                <div class="panel-icon blue">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+                </div>
+                <div>
+                    <h3>Algorithm Comparison</h3>
+                    <p>Offline benchmark: LRU vs LFU vs SmartEdge</p>
+                </div>
+            </div>
+            <div class="chart-container">
+                <canvas id="benchmarkChart"></canvas>
+            </div>
+        </section>
+
+        <section class="algorithm-grid">
+            <div class="algo-card">
+                <div class="algo-header"><h3>LRU</h3><span>Offline Benchmark</span></div>
+                <div class="algo-value" id="lruRate">--</div>
+                <p>Least Recently Used</p>
+                <div class="algo-stat"><span>Hits</span><strong id="lruHits">--</strong></div>
+                <div class="algo-stat"><span>Evictions</span><strong id="lruEvictions">--</strong></div>
+            </div>
+            <div class="algo-card">
+                <div class="algo-header"><h3>LFU</h3><span>Offline Benchmark</span></div>
+                <div class="algo-value" id="lfuRate">--</div>
+                <p>Least Frequently Used</p>
+                <div class="algo-stat"><span>Hits</span><strong id="lfuHits">--</strong></div>
+                <div class="algo-stat"><span>Evictions</span><strong id="lfuEvictions">--</strong></div>
+            </div>
+            <div class="algo-card featured">
+                <div class="algo-header"><h3>SmartEdge</h3><span>ML Powered</span></div>
+                <div class="algo-value" id="smartedgeRate">--</div>
+                <p>Predictive caching algorithm</p>
+                <div class="algo-stat"><span>Hits</span><strong id="smartedgeHits">--</strong></div>
+                <div class="algo-stat"><span>Admissions</span><strong id="smartedgeInsertions">--</strong></div>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- CACHE VIEW -->
+    <div id="view-cache" class="page-view">
+        <section class="panel-card">
+            <div class="panel-header">
+                <div class="panel-icon blue">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13"/><path d="M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                </div>
+                <div>
+                    <h3>Live Request Simulator</h3>
+                    <p>Send a resource request through the SmartEdge caching engine</p>
+                </div>
+            </div>
+            <div class="request-simulator">
+                <div class="request-form">
+                    <label for="requestUrl">Resource URL</label>
+                    <input id="requestUrl" type="text" placeholder="/images/example.gif" value="/images/banner.jpg">
+
+                    <label for="requestContentSize">Content Size (bytes)</label>
+                    <input id="requestContentSize" type="number" min="1" value="45000">
+
+                    <button id="sendRequestBtn" class="btn-primary" onclick="sendCacheRequest()">Send Request</button>
+                </div>
+                <div class="request-result" id="requestResult">
+                    <div class="result-badge" id="requestStatus">--</div>
+                    <h3 id="requestMessage">Waiting...</h3>
+                    <p id="requestDetails">Send a request to see SmartEdge in action.</p>
+                    <div class="request-metrics">
+                        <div><span>ML Prediction</span><strong id="requestPrediction">--</strong></div>
+                        <div><span>Probability</span><strong id="requestProbability">--</strong></div>
+                        <div><span>Decision</span><strong id="requestDecision">--</strong></div>
+                        <div><span>Response Time</span><strong id="requestResponseTime">--</strong></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel-card">
+            <div class="panel-header with-action">
+                <div class="panel-header-left">
+                    <div class="panel-icon blue">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                    </div>
+                    <div>
+                        <h3>Cache Contents</h3>
+                        <p>Currently stored content in edge cache</p>
+                    </div>
+                </div>
+                <button class="btn-danger-outline" onclick="resetCache()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+                    Reset Cache
+                </button>
+            </div>
+            <div class="table-wrapper">
+                <table class="cache-table">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Content ID / URL</th>
+                            <th>Size (KB)</th>
+                            <th>Cached At</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cacheTableBodyAlt">
+                        <tr><td colspan="5" class="empty-row">Loading cache contents...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </div>
+
+
+    <!-- ABOUT VIEW -->
+    <div id="view-about" class="page-view">
+        <section class="panel-card about-card">
+            <div class="panel-header">
+                <div class="panel-icon blue">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                </div>
+                <div>
+                    <h3>About SmartEdge</h3>
+                    <p>Predictive Edge Caching for a Smarter CDN</p>
+                </div>
+            </div>
+            <div class="about-content">
+                <p>SmartEdge is an ML-driven predictive edge caching system that uses a Random Forest classifier to make intelligent cache admission decisions. Unlike traditional LRU and LFU algorithms, SmartEdge predicts content reuse probability before caching, resulting in significantly higher hit rates.</p>
+                <h4>Architecture</h4>
+                <ul>
+                    <li><strong>Backend:</strong> FastAPI with scikit-learn Random Forest model</li>
+                    <li><strong>Cache Engine:</strong> Score-based eviction with ML admission threshold</li>
+                    <li><strong>AI Agent:</strong> RAG-powered analyst using Ollama LLM</li>
+                    <li><strong>Dataset:</strong> NASA web server access logs</li>
+                </ul>
+                <h4>Key Features</h4>
+                <ul>
+                    <li>Real-time cache hit/miss tracking with live statistics</li>
+                    <li>ML prediction engine for cache admission decisions</li>
+                    <li>Offline benchmark comparison (LRU vs LFU vs SmartEdge)</li>
+                    <li>AI-powered performance analysis and optimization suggestions</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+
+</main>
+
+
+<!-- FOOTER -->
+<footer class="site-footer">
+    <span>SmartEdge | Predictive Edge Caching for a Smarter CDN</span>
+    <span>Built with &#9829; for a smarter internet</span>
+</footer>
+
+
+<script src="script.js"></script>
+</body>
+</html>
