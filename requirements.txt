@@ -1,0 +1,26 @@
+# SmartEdge - ML-Driven Predictive Edge Caching System
+# Python Dependencies
+
+# FastAPI and Server
+fastapi>=0.104.0
+uvicorn[standard]>=0.24.0
+pydantic>=2.5.0
+
+# Machine Learning
+scikit-learn>=1.3.0
+joblib>=1.3.0
+pandas>=2.1.0
+numpy>=1.26.0
+
+# RAG and Embeddings
+sentence-transformers>=2.2.0
+faiss-cpu>=1.7.0
+
+# Ollama (Python client)
+ollama>=0.1.0
+
+# HTTP Requests
+requests>=2.31.0
+
+# Data Processing
+python-multipart>=0.0.6
