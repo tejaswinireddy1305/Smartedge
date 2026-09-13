@@ -1,0 +1,35 @@
+SmartEdge Predictive Edge Caching System
+
+SmartEdge is an ML-driven predictive edge caching system designed to improve cache performance by predicting whether requested resources are likely to be reused.
+
+The system uses a Random Forest classifier to predict cache reuse behavior.
+
+The machine learning model uses five features:
+
+1. hour
+2. day_of_week
+3. past_frequency
+4. recency_seconds
+5. content_size
+
+The model predicts five reuse classes:
+
+0 - NO_REUSE
+1 - LOW_REUSE
+2 - MEDIUM_REUSE
+3 - HIGH_REUSE
+4 - VERY_HIGH_REUSE
+
+The predicted probabilities are used to calculate reusable probability and expected cache value.
+
+SmartEdge combines machine learning prediction with a cache admission policy.
+
+If the predicted reusable probability satisfies the configured threshold, the resource can be admitted into the cache.
+
+The cache uses an OrderedDict-based implementation.
+
+The system tracks cache hits, misses, evictions and proactive insertions.
+
+SmartEdge can be compared with traditional caching algorithms such as LRU and LFU.
+
+The purpose of SmartEdge is to proactively cache resources that are predicted to have future reuse potential rather than relying only on traditional reactive caching behavior.

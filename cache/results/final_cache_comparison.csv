@@ -1,0 +1,4 @@
+algorithm,requests,hits,misses,hit_rate,miss_rate,average_latency_ms,hit_latency_ms,miss_latency_ms,origin_requests,bandwidth_bytes,bandwidth_kb,bandwidth_mb,cache_utilization_percent,evictions,proactive_insertions,execution_time_seconds,throughput_req_per_sec
+LRU,100000,63500,36500,63.5,36.5,42.85,10.0,100.0,36500,1270056097,1240289.157,1211.22,99.925,36400,0,0.456729,218948.121
+LFU,100000,67131,32869,67.131,32.869,39.582,10.0,100.0,32869,1306101287,1275489.538,1245.595,99.925,32769,0,1.333999,74962.575
+SmartEdge,100000,71376,28624,71.376,28.624,35.762,10.0,100.0,28624,1258496198,1229000.193,1200.196,97.848,519,619,1.138954,87799.828

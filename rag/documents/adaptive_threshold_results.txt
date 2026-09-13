@@ -1,0 +1,83 @@
+SmartEdge Adaptive Threshold Benchmark
+
+The SmartEdge predictive caching system was evaluated using a NASA request trace containing 10,000 requests.
+
+The experiment evaluated cache capacities of 25, 50, 75, 100, 150, 200, 300 and 500.
+
+Multiple admission thresholds were evaluated. The best tested threshold was 0.1 across the evaluated capacities.
+
+At cache capacity 25:
+LRU hit rate: 31.66%
+LFU hit rate: 44.45%
+SmartEdge hit rate: 47.26%
+SmartEdge improvement over LFU: 2.81 percentage points.
+SmartEdge admissions: 2349.
+SmartEdge evictions: 2324.
+
+At cache capacity 50:
+LRU hit rate: 47.29%
+LFU hit rate: 57.01%
+SmartEdge hit rate: 59.30%
+SmartEdge improvement over LFU: 2.29 percentage points.
+SmartEdge admissions: 1631.
+SmartEdge evictions: 1581.
+
+At cache capacity 75:
+LRU hit rate: 54.89%
+LFU hit rate: 62.94%
+SmartEdge hit rate: 64.61%
+SmartEdge improvement over LFU: 1.67 percentage points.
+SmartEdge admissions: 1453.
+SmartEdge evictions: 1378.
+
+At cache capacity 100:
+LRU hit rate: 59.54%
+LFU hit rate: 65.85%
+SmartEdge hit rate: 68.11%
+SmartEdge improvement over LFU: 2.26 percentage points.
+SmartEdge admissions: 1327.
+SmartEdge evictions: 1227.
+
+At cache capacity 150:
+LRU hit rate: 66.87%
+LFU hit rate: 70.96%
+SmartEdge hit rate: 72.10%
+SmartEdge improvement over LFU: 1.14 percentage points.
+SmartEdge admissions: 1326.
+SmartEdge evictions: 1176.
+
+At cache capacity 200:
+LRU hit rate: 70.95%
+LFU hit rate: 73.93%
+SmartEdge hit rate: 75.14%
+SmartEdge improvement over LFU: 1.21 percentage points.
+SmartEdge admissions: 1241.
+SmartEdge evictions: 1041.
+
+At cache capacity 300:
+LRU hit rate: 76.70%
+LFU hit rate: 79.09%
+SmartEdge hit rate: 79.34%
+SmartEdge improvement over LFU: 0.25 percentage points.
+SmartEdge admissions: 1049.
+SmartEdge evictions: 749.
+
+At cache capacity 500:
+LRU hit rate: 81.80%
+LFU hit rate: 82.79%
+SmartEdge hit rate: 82.80%
+SmartEdge improvement over LFU: 0.01 percentage points.
+SmartEdge admissions: 796.
+SmartEdge evictions: 296.
+
+Overall observation:
+
+SmartEdge performs particularly well at constrained cache capacities. Its advantage over LFU decreases as cache capacity increases.
+
+The strongest improvement over LFU occurs at capacity 25, where SmartEdge achieves a 2.81 percentage point improvement.
+
+At capacity 100, SmartEdge achieves 68.11% hit rate compared with 65.85% for LFU and 59.54% for LRU.
+
+At capacity 500, SmartEdge and LFU are almost identical, with SmartEdge at 82.80% and LFU at 82.79%.
+
+The experiments demonstrate that cache capacity and admission threshold have an important effect on SmartEdge performance.

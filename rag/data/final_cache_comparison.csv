@@ -1,0 +1,4 @@
+algorithm,requests,hits,misses,hit_rate,evictions,proactive_insertions
+LRU,100000,63500,36500,63.5,36400,0
+LFU,100000,67707,32293,67.707,32193,0
+SmartEdge,100000,60737,39263,60.736999999999995,0,65
